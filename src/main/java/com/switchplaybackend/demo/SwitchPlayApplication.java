@@ -8,6 +8,7 @@ public class SwitchPlayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SwitchPlayApplication.class, args);
+        System.out.println("Application is running...");
     }
 
 }
