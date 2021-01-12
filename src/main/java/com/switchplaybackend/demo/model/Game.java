@@ -1,5 +1,6 @@
 package com.switchplaybackend.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
@@ -25,13 +26,14 @@ public class Game {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     private String title;
     private String platform;
     private String picture;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference()
-    private List<Category> category = new ArrayList<>();
+    @ManyToOne()
+    @JsonBackReference
+    private Category category;
 
 }

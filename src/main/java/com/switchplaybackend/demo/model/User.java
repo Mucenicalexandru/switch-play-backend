@@ -35,9 +35,10 @@ public class User {
     private String country;
     private String console;
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value = "user")
-    private List<Category> favouriteCategories = new ArrayList<>();
+    @OneToMany(targetEntity = Category.class,cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+//    @JsonManagedReference(value = "user")
+    private List<Category> favouriteCategories;
 
     private Date registrationDate;
 
