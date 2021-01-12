@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +37,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "user")
-    private List<Category> favouriteCategories;
+    private List<Category> favouriteCategories = new ArrayList<>();
 
     private Date registrationDate;
 
