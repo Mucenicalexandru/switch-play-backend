@@ -29,4 +29,9 @@ public class CategoryController {
         return ResponseEntity.created(new URI("/api/add-category" + result.getId())).body(result);
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> soare
 }
