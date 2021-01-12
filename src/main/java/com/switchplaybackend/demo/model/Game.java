@@ -1,10 +1,12 @@
 package com.switchplaybackend.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +30,8 @@ public class Game {
     private String platform;
     private String picture;
 
-    @OneToMany(mappedBy = "game")
-    @JsonManagedReference(value = "game")
-    private List<Category> category;
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference()
+    private List<Category> category = new ArrayList<>();
 
 }
