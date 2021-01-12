@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,11 +26,13 @@ public class Category {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     @JsonBackReference(value = "user")
     private User user;
 
-    @ManyToOne
-    @JsonBackReference(value = "game")
+    @ManyToOne()
+    @JoinColumn(name = "game_id")
+    @JsonBackReference
     private Game game;
 
 
