@@ -1,10 +1,8 @@
 package com.switchplaybackend.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.switchplaybackend.demo.repository.GameRepository;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,8 +29,7 @@ public class Game {
     private String picture;
 
     @OneToMany(mappedBy = "game")
-    @JsonManagedReference
+    @JsonManagedReference(value = "game")
     private List<Category> category;
-
 
 }

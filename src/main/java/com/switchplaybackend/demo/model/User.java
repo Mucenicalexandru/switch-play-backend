@@ -35,7 +35,7 @@ public class User {
     private String console;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference(value = "user")
     private List<Category> favouriteCategories;
 
     private Date registrationDate;

@@ -25,11 +25,11 @@ public class Category {
     private String name;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "user")
     private User user;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "game")
     private Game game;
 
 
