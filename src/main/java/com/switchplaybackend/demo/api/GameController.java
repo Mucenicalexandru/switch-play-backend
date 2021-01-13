@@ -34,7 +34,7 @@ public class GameController {
         game.setCategory(category);
 
         Game result = gameRepository.save(game);
-        return ResponseEntity.created(new URI("/api/add-game" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/add-game" + result.getId())).body(result);
     }
 
     @DeleteMapping("/delete-game/{id}")

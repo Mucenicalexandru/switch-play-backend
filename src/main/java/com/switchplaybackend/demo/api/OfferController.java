@@ -34,7 +34,7 @@ public class OfferController {
         User user = userRepository.findById(userID).get();
         offer.setUser(user);
         Offer offerToSave = offerRepository.save(offer);
-        return ResponseEntity.created(new URI("/api/add-offer" + offerToSave.getId())).body(offerToSave);
+        return ResponseEntity.created(new URI("/add-offer" + offerToSave.getId())).body(offerToSave);
     }
 
     @DeleteMapping("/remove-offer/{id}")

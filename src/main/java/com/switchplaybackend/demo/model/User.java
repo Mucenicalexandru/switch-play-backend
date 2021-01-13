@@ -1,13 +1,10 @@
 package com.switchplaybackend.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Date;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +27,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private String phone;
     private String town;
     private String country;
@@ -37,8 +35,8 @@ public class User {
 
     @OneToMany(targetEntity = Category.class,cascade = CascadeType.ALL)
     @JoinColumn(name="user_id",referencedColumnName = "id")
-//    @JsonManagedReference(value = "user")
     private List<Category> favouriteCategories;
+
 
     private Date registrationDate;
 
