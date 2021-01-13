@@ -3,12 +3,14 @@ package com.switchplaybackend.demo.api;
 import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,6 +41,22 @@ public class UserController {
            User result = userRepository.save(user);
            return ResponseEntity.created(new URI("/add-user" + result.getId())).body(result);
        }
+
+    }
+    @PostMapping("/check-if-user")
+    public ResponseEntity<?> checkUser(@Valid @RequestBody User user) throws URISyntaxException{
+        if(userRepository.existsByEmail(user.getEmail())){
+            if(BCrypt.checkpw(user.getPassword(), userRepository.findByEmail(user.getEmail()).getPassword())){
+                HttpHeaders responseHeaders = new HttpHeaders();
+                return new ResponseEntity<>(responseHeaders, HttpStatus.OK);
+            }else{
+                HttpHeaders responseHeaders = new HttpHeaders();
+                return new ResponseEntity<>(responseHeaders, HttpStatus.UNAUTHORIZED);
+            }
+        }else{
+            HttpHeaders responseHeaders = new HttpHeaders();
+            return new ResponseEntity<>(responseHeaders, HttpStatus.CONFLICT);
+        }
 
     }
 
