@@ -28,14 +28,11 @@ public class GameController {
     }
 
 
-    @PostMapping("/add-game/{categoryId}")
-    public ResponseEntity<Game> addGame(@PathVariable UUID categoryId, @RequestBody Game game) throws URISyntaxException {
-        Category category = categoryRepository.findById(categoryId).get();
-        game.setCategory(category);
-
-        Game result = gameRepository.save(game);
-        return ResponseEntity.created(new URI("/add-game" + result.getId())).body(result);
-    }
+//    @PostMapping("/add-game/{categoryId}")
+//    public ResponseEntity<Game> addGame(@PathVariable UUID categoryId, @RequestBody Game game) throws URISyntaxException {
+//        Game result = gameRepository.save(game);
+//        return ResponseEntity.created(new URI("/add-game" + result.getId())).body(result);
+//    }
 
     @DeleteMapping("/delete-game/{id}")
     public ResponseEntity<Game> deleteGame(@PathVariable UUID id){

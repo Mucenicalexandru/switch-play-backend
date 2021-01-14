@@ -30,7 +30,7 @@ public class OfferController {
     }
 
     @PostMapping("/add-offer/{userID}")
-    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer ,@PathVariable UUID userID) throws URISyntaxException {
+    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer, @PathVariable UUID userID) throws URISyntaxException {
         User user = userRepository.findById(userID).get();
         offer.setUser(user);
         Offer offerToSave = offerRepository.save(offer);
@@ -41,6 +41,11 @@ public class OfferController {
     public ResponseEntity<Offer> deleteOffer(@PathVariable UUID id){
         offerRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/get-offer/{title}")
+    public List<Offer> getOfferByName(@PathVariable String title){
+        return offerRepository.getAllByGameTitle(title);
     }
 
 }
