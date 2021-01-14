@@ -33,9 +33,6 @@ public class Category {
     @JsonBackReference(value = "user")
     private User user;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Game> games = new ArrayList<>();
 
 
 }

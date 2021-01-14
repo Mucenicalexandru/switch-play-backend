@@ -31,10 +31,8 @@ public class Game {
     private String title;
     private String platform;
     private String picture;
-
-    @ManyToOne()
-    @JsonBackReference
-    private Category category;
+    private String category;
+    private String rating;
 
 
 }
