@@ -30,7 +30,7 @@ public class OfferController {
     }
 
     @PostMapping("/add-offer/{userID}")
-    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer ,@PathVariable UUID userID) throws URISyntaxException {
+    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer, @PathVariable UUID userID) throws URISyntaxException {
         User user = userRepository.findById(userID).get();
         offer.setUser(user);
         Offer offerToSave = offerRepository.save(offer);
