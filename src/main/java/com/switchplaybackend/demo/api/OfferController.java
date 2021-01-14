@@ -43,4 +43,9 @@ public class OfferController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/get-offer")
+    public List<Offer> getOfferByName(@PathVariable String title){
+        return offerRepository.getAllByGameTitle(title);
+    }
+
 }
