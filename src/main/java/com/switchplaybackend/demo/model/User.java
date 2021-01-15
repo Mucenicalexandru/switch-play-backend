@@ -37,6 +37,10 @@ public class User {
     @JoinColumn(name="user_id",referencedColumnName = "id")
     private List<Category> favouriteCategories;
 
+    @OneToMany(targetEntity = Offer.class,cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+    private List<Offer> activeOffers;
+
 
     private Date registrationDate;
 

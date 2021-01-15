@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.api;
 
 import com.switchplaybackend.demo.model.User;
+import com.switchplaybackend.demo.repository.OfferRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,7 @@ public class UserController {
     @GetMapping("/get-user-by-id/{id}")
     public Optional<User> getUserByID(@PathVariable UUID id){
         return userRepository.findById(id);
+
     }
 
 
