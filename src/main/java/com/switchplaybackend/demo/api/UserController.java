@@ -70,4 +70,19 @@ public class UserController {
 
     }
 
+    @PutMapping("/update-user/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody User updatedUser, @PathVariable UUID id) throws URISyntaxException {
+        User userToBeUpdated = userRepository.findById(id).get();
+        userToBeUpdated.setFirstName(updatedUser.getFirstName());
+        userToBeUpdated.setLastName(updatedUser.getLastName());
+        userToBeUpdated.setEmail(updatedUser.getEmail());
+        userToBeUpdated.setCountry(updatedUser.getCountry());
+        userToBeUpdated.setTown(updatedUser.getTown());
+        userToBeUpdated.setPhone(updatedUser.getPhone());
+        userToBeUpdated.setConsole(updatedUser.getConsole());
+        User updated = userRepository.save(userToBeUpdated);
+        return ResponseEntity.created(new URI("/update-user" + updated.getId())).body(updated);
+
+    }
+
 }
