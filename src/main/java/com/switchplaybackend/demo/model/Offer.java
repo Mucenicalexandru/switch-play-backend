@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,14 +22,13 @@ public class Offer {
     private UUID id;
 
 
-    @OneToOne()
-    @JoinColumn(name = "user_id")
-    @JsonBackReference(value = "user")
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Game game;
 
     private String description;
+
 
 }

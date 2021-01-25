@@ -1,5 +1,7 @@
 package com.switchplaybackend.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,13 +35,13 @@ public class User {
     private String country;
     private String console;
 
-    @OneToMany(targetEntity = Category.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id",referencedColumnName = "id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Category> favouriteCategories;
 
-    @OneToMany(targetEntity = Offer.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id",referencedColumnName = "id")
-    private List<Offer> activeOffers;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+//    private List<Offer> activeOffers;
 
 
     private Date registrationDate;

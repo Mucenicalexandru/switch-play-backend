@@ -1,5 +1,6 @@
 package com.switchplaybackend.demo.api;
 
+import com.switchplaybackend.demo.model.Offer;
 import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.repository.OfferRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,6 +25,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private OfferRepository offerRepository;
+
 
     @GetMapping("/users")
     public List<User> getAllUsers(){ return userRepository.findAll();}
@@ -31,7 +36,11 @@ public class UserController {
     @GetMapping("/get-user-by-id/{id}")
     public Optional<User> getUserByID(@PathVariable UUID id){
         return userRepository.findById(id);
+    }
 
+    @GetMapping("/get-active-offers-by-user-id/{id}")
+    public List<Offer> getActiveOffersByUser(@PathVariable UUID id){
+        return offerRepository.getAllByUser_Id(id);
     }
 
 

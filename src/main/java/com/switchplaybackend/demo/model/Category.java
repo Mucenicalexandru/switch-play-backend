@@ -28,9 +28,8 @@ public class Category {
     private UUID id;
     private String name;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id")
-    @JsonBackReference(value = "user")
+    @ManyToOne
+    @JsonBackReference
     private User user;
 
 

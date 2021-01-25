@@ -46,6 +46,7 @@ public class OfferController {
     @GetMapping("/get-offer/{title}")
     public List<Offer> getOfferByName(@PathVariable String title){
         return offerRepository.getAllByGameTitle(title);
+
     }
 
 }
