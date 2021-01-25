@@ -4,23 +4,42 @@ import com.switchplaybackend.demo.model.Offer;
 import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.repository.OfferRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
+import com.switchplaybackend.demo.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenServices jwtTokenServices;
+
+    public UserController(AuthenticationManager authenticationManager,
+                          JwtTokenServices jwtTokenServices,
+                          UserRepository userRepository){
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenServices = jwtTokenServices;
+        this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -51,7 +70,8 @@ public class UserController {
             HttpHeaders responseHeaders = new HttpHeaders();
             return new ResponseEntity<>(responseHeaders, HttpStatus.CONFLICT);
        }else{
-           String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+           String password = passwordEncoder.encode(user.getPassword());
+           System.out.println(password.getBytes());
            user.setPassword(password);
 
            User result = userRepository.save(user);
@@ -59,26 +79,7 @@ public class UserController {
        }
 
     }
-    @PostMapping("/check-if-user")
-    public ResponseEntity<?> checkUser(@Valid @RequestBody User user) throws URISyntaxException{
-        System.out.println("User is trying to login");
-        if(userRepository.existsByEmail(user.getEmail())){
-            if(BCrypt.checkpw(user.getPassword(), userRepository.findByEmail(user.getEmail()).get().getPassword())){
-                HttpHeaders responseHeaders = new HttpHeaders();
-                System.out.println("correct password");
-                return new ResponseEntity<>(responseHeaders, HttpStatus.OK);
-            }else{
-                System.out.println("wrong password");
-                HttpHeaders responseHeaders = new HttpHeaders();
-                return new ResponseEntity<>(responseHeaders, HttpStatus.UNAUTHORIZED);
-            }
-        }else{
-            System.out.println("wrong email");
-            HttpHeaders responseHeaders = new HttpHeaders();
-            return new ResponseEntity<>(responseHeaders, HttpStatus.CONFLICT);
-        }
 
-    }
 
     @PutMapping("/update-user/{id}")
     public ResponseEntity<?> updateUser(@RequestBody User updatedUser, @PathVariable UUID id) throws URISyntaxException {
