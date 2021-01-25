@@ -61,8 +61,9 @@ public class UserController {
     }
     @PostMapping("/check-if-user")
     public ResponseEntity<?> checkUser(@Valid @RequestBody User user) throws URISyntaxException{
+        System.out.println("User is trying to login");
         if(userRepository.existsByEmail(user.getEmail())){
-            if(BCrypt.checkpw(user.getPassword(), userRepository.findByEmail(user.getEmail()).getPassword())){
+            if(BCrypt.checkpw(user.getPassword(), userRepository.findByEmail(user.getEmail()).get().getPassword())){
                 HttpHeaders responseHeaders = new HttpHeaders();
                 System.out.println("correct password");
                 return new ResponseEntity<>(responseHeaders, HttpStatus.OK);
