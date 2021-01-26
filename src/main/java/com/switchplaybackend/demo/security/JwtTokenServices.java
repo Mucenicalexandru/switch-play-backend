@@ -16,10 +16,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static javax.crypto.Cipher.SECRET_KEY;
 
@@ -39,6 +36,7 @@ public class JwtTokenServices {
     private long validityInMilliseconds = 36000000; // 10h
 
     private final String rolesFieldName = "roles";
+    private final String userId = "userId";
 
     @PostConstruct
     protected void init() {
@@ -46,10 +44,11 @@ public class JwtTokenServices {
     }
 
     // Creates a JWT token
-    public String createToken(String username, List<String> roles) {
+    public String createToken(String username, List<String> roles, UUID id) {
         // Add a custom field to the token
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(rolesFieldName, roles);
+        claims.put(userId, id);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

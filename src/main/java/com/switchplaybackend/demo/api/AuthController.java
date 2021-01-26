@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,7 +43,7 @@ public class AuthController {
 
         if(userRepository.existsByEmail(user.getEmail())){
             String email = user.getEmail();
-
+            UUID id = userRepository.findByEmail(email).get().getId();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, user.getPassword()));
             List<String> roles = authentication.getAuthorities()
@@ -50,7 +51,8 @@ public class AuthController {
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            String token = jwtTokenServices.createToken(email, roles);
+
+            String token = jwtTokenServices.createToken(email, roles, id);
 
             Map<Object, Object> model = new HashMap<>();
             model.put("email", email);
