@@ -24,13 +24,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 @Slf4j
 public class JwtTokenServices {
 
-    @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
-
-
-    public static Key getKey() {
-        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    }
+    private String key = "secretsecretsecretsecretsecret";
 
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 36000000; // 10h
@@ -38,10 +32,6 @@ public class JwtTokenServices {
     private final String rolesFieldName = "roles";
     private final String userId = "userId";
 
-    @PostConstruct
-    protected void init() {
-        secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256).toString();
-    }
 
     // Creates a JWT token
     public String createToken(String username, List<String> roles, UUID id) {
@@ -57,7 +47,7 @@ public class JwtTokenServices {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(getKey())
+                .signWith(Keys.hmacShaKeyFor(key.getBytes()))
                 .compact();
     }
 
@@ -72,7 +62,7 @@ public class JwtTokenServices {
     // checks if the token is valid and not expired.
     boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(key.getBytes())).parseClaimsJws(token);
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
@@ -84,7 +74,7 @@ public class JwtTokenServices {
     }
 
     Authentication parseUserFromTokenInfo(String token) throws UsernameNotFoundException {
-        Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        Claims body = Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(key.getBytes())).parseClaimsJws(token).getBody();
         String username = body.getSubject();
         List<String> roles = (List<String>) body.get(rolesFieldName);
         List<SimpleGrantedAuthority> authorities = new LinkedList<>();

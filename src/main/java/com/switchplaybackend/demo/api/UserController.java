@@ -67,7 +67,6 @@ public class UserController {
             return new ResponseEntity<>(responseHeaders, HttpStatus.CONFLICT);
        }else{
            String password = passwordEncoder.encode(user.getPassword());
-           System.out.println(password.getBytes());
            user.setPassword(password);
 
            User result = userRepository.save(user);
