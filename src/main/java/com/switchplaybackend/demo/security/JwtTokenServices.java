@@ -28,7 +28,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 public class JwtTokenServices {
 
     @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "!12secret";
+    private String secretKey = "secret";
 
 
     public static Key getKey() {

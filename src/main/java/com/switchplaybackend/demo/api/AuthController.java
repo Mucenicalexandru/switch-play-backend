@@ -3,12 +3,13 @@ package com.switchplaybackend.demo.api;
 import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.repository.UserRepository;
 import com.switchplaybackend.demo.security.JwtTokenServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AuthController {
 
+    @Autowired
+    private UserRepository userRepository;
+
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenServices jwtTokenServices;
@@ -33,10 +37,10 @@ public class AuthController {
         this.jwtTokenServices = jwtTokenServices;
     }
 
-    @PostMapping("/check-if-user")
-    public ResponseEntity<?> signin(@RequestBody User user) {
-        System.out.println("USER IS TRYING TO LOGIN");
-        try {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+
+        if(userRepository.existsByEmail(user.getEmail())){
             String email = user.getEmail();
 
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
@@ -52,9 +56,12 @@ public class AuthController {
             model.put("email", email);
             model.put("roles", roles);
             model.put("token", token);
+
             return ResponseEntity.ok(model);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username/password supplied");
+        }else{
+            HttpHeaders responseHeaders = new HttpHeaders();
+            return new ResponseEntity<>(responseHeaders, HttpStatus.CONFLICT);
         }
+
     }
 }
