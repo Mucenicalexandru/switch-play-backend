@@ -24,7 +24,8 @@ import static javax.crypto.Cipher.SECRET_KEY;
 @Slf4j
 public class JwtTokenServices {
 
-    private String key = "secretsecretsecretsecretsecret";
+    @Value("${jwt.token.secret}")
+    private String key;
 
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 36000000; // 10h
