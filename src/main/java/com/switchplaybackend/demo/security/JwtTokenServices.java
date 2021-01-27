@@ -67,6 +67,7 @@ public class JwtTokenServices {
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
+            System.out.println("works");
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             log.debug("JWT token invalid " + e);
