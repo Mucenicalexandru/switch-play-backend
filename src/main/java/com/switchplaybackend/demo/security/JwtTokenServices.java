@@ -32,12 +32,14 @@ public class JwtTokenServices {
 
     private final String rolesFieldName = "roles";
     private final String userId = "userId";
+    private final String firstName = "firstName";
 
 
     // Creates a JWT token
-    public String createToken(String username, List<String> roles, UUID id) {
+    public String createToken(String userFirstName,String email, List<String> roles, UUID id) {
         // Add a custom field to the token
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(email);
+        claims.put(firstName,userFirstName);
         claims.put(rolesFieldName, roles);
         claims.put(userId, id);
 

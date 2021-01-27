@@ -44,6 +44,7 @@ public class AuthController {
         if(userRepository.existsByEmail(user.getEmail())){
             String email = user.getEmail();
             UUID id = userRepository.findByEmail(email).get().getId();
+            String firstName = userRepository.findByEmail(email).get().getFirstName();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, user.getPassword()));
             List<String> roles = authentication.getAuthorities()
@@ -52,10 +53,11 @@ public class AuthController {
                     .collect(Collectors.toList());
 
 
-            String token = jwtTokenServices.createToken(email, roles, id);
+            String token = jwtTokenServices.createToken(firstName,email, roles, id);
+
 
             Map<Object, Object> model = new HashMap<>();
-            model.put("email", email);
+            model.put("firstName", firstName);
             model.put("roles", roles);
             model.put("token", token);
 
