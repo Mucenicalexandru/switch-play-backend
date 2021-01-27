@@ -10,4 +10,5 @@ public interface OfferRepository extends JpaRepository<Offer, UUID> {
     List<Offer> getAllByGameTitle(String title);
     List<Offer> getAllByUser_Id (UUID id);
 
+
 }

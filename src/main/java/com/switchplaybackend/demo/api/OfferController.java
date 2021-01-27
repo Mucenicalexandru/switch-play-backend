@@ -29,6 +29,11 @@ public class OfferController {
         return offerRepository.findAll();
     }
 
+    @GetMapping("/offer-by-id/{offerId}")
+    public Offer getOfferById(@PathVariable UUID offerId){
+        return offerRepository.findById(offerId).get();
+    }
+
     @PostMapping("/add-offer/{userID}")
     public ResponseEntity<Offer> addOffer(@RequestBody Offer offer, @PathVariable UUID userID) throws URISyntaxException {
         User user = userRepository.findById(userID).get();

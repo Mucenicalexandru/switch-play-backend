@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.repository;
 
 import com.switchplaybackend.demo.model.Deal;
+import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.util.DealStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +11,6 @@ import java.util.UUID;
 public interface DealRepository extends JpaRepository<Deal, UUID> {
 
     List<Deal> findByStatus (DealStatus dealStatus);
+    Deal findByUserWhoReceived_Id (UUID userId);
+    Deal findByUserWhoSent_Id (UUID userId);
 }
