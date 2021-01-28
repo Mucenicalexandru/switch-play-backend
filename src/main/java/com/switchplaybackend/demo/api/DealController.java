@@ -1,7 +1,6 @@
 package com.switchplaybackend.demo.api;
 
 import com.switchplaybackend.demo.model.Deal;
-import com.switchplaybackend.demo.model.User;
 import com.switchplaybackend.demo.repository.DealRepository;
 import com.switchplaybackend.demo.util.DealStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class DealController {
     private DealRepository dealRepository;
 
 
-    //get all the deals in progress (where status is in progress)
+//    get all the deals in progress (where status is in progress)
     @GetMapping("/deals-in-progress")
     public List<Deal> getDealsInProgress(){
         return dealRepository.findByStatus(DealStatus.PENDING);
@@ -58,7 +57,6 @@ public class DealController {
     //when click on "Make an offer" - we add the deal with 2 users, 2 games, status and date
     @PostMapping("/add-deal")
     public ResponseEntity<Deal> addDeal(@RequestBody Deal deal) throws URISyntaxException {
-        System.out.println(deal);
         Deal result = dealRepository.save(deal);
         return ResponseEntity.created(new URI("/api/add-deal" + result.getId())).body(result);
     }

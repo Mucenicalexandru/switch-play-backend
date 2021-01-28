@@ -25,14 +25,14 @@ public class Deal {
     )
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User userWhoSent; //user who is sending the offer
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Game gameSent; //the given game of the user who sends the offer
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User userWhoReceived; //user who is receiving the offer
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Game gameWhoReceived; //the game of the user who is receiving the offer
 
     private Date date;
