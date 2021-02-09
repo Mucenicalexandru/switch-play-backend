@@ -26,11 +26,11 @@ public class Deal {
     )
     private UUID id;
 
-    private String gameListedId;
+    private UUID gameListedId;
 
-    private String offlineUserID;
+    private UUID offlineUserID;
 
-    private String activeUserID;
+    private UUID activeUserID;
 
     private String gameSentTitle;
 

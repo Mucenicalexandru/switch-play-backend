@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "added_offers", catalog = "switch_play")
+@Table(name = "offers", catalog = "switch_play")
 @Data
-public class OfferAdded {
+public class Offer {
 
     @Id
     @GeneratedValue(generator = "UUID")
