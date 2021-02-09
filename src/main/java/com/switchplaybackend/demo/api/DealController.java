@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Transactional
@@ -25,6 +26,16 @@ public class DealController {
     @GetMapping("/deals")
     public List<Deal> getAllDeals(){
         return dealRepository.findAll();
+    }
+
+
+    @GetMapping("/get-deal-by-user-and-game/{userID}/{gameID}")
+    public List<Deal> getDealByUserAndGame(@PathVariable UUID userID, @PathVariable UUID gameID){
+        System.out.println(userID);
+        System.out.println(gameID);
+        List<Deal> deal = dealRepository.findAllByActiveUserIDAndGameListedId(userID, gameID);
+        System.out.println(deal);
+        return deal;
     }
 
 
