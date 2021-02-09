@@ -1,7 +1,5 @@
 package com.switchplaybackend.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,9 +7,9 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "offers", catalog = "switch_play")
+@Table(name = "added_offers", catalog = "switch_play")
 @Data
-public class Offer {
+public class OfferAdded {
 
     @Id
     @GeneratedValue(generator = "UUID")

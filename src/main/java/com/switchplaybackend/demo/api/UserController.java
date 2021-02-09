@@ -1,8 +1,8 @@
 package com.switchplaybackend.demo.api;
 
-import com.switchplaybackend.demo.model.Offer;
+import com.switchplaybackend.demo.model.OfferAdded;
 import com.switchplaybackend.demo.model.User;
-import com.switchplaybackend.demo.repository.OfferRepository;
+import com.switchplaybackend.demo.repository.AddedOfferRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
 import com.switchplaybackend.demo.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private OfferRepository offerRepository;
+    private AddedOfferRepository addedOfferRepository;
 
 
     @GetMapping("/users")
@@ -54,8 +54,8 @@ public class UserController {
     }
 
     @GetMapping("/get-active-offers-by-user-id/{id}")
-    public List<Offer> getActiveOffersByUser(@PathVariable UUID id){
-        return offerRepository.getAllByUser_Id(id);
+    public List<OfferAdded> getActiveOffersByUser(@PathVariable UUID id){
+        return addedOfferRepository.getAllByUser_Id(id);
     }
 
 

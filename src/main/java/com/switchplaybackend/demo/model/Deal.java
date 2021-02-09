@@ -1,5 +1,6 @@
 package com.switchplaybackend.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.switchplaybackend.demo.util.DealStatus;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -25,15 +26,13 @@ public class Deal {
     )
     private UUID id;
 
-    @OneToOne
-    private User userWhoSent; //user who is sending the offer
-    @OneToOne
-    private Game gameSent; //the given game of the user who sends the offer
+    private String gameListedId;
 
-    @OneToOne
-    private User userWhoReceived; //user who is receiving the offer
-    @OneToOne
-    private Game gameWhoReceived; //the game of the user who is receiving the offer
+    private String offlineUserID;
+
+    private String activeUserID;
+
+    private String gameSentTitle;
 
     private Date date;
 

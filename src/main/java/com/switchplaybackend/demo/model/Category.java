@@ -28,10 +28,6 @@ public class Category {
     private UUID id;
     private String name;
 
-    @ManyToOne
-    @JsonBackReference
-    private User user;
-
 
 
 }
