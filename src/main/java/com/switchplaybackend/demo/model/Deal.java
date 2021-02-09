@@ -30,9 +30,15 @@ public class Deal {
 
     private UUID offlineUserID;
 
+    private String offlineUserName;
+
     private UUID activeUserID;
 
     private String gameSentTitle;
+
+    private String gameSentPlatform;
+
+    private String gameSentImage;
 
     private Date date;
 
