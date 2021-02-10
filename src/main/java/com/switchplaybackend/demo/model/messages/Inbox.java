@@ -1,5 +1,6 @@
 package com.switchplaybackend.demo.model.messages;
 
+import com.switchplaybackend.demo.model.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Inbox {
 
     @OneToMany(mappedBy = "InboxId")
     private List<Message> messageList;
+
+    @OneToOne
+    private User user;
 
 
 }
