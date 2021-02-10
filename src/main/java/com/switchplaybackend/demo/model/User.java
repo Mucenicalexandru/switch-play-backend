@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.switchplaybackend.demo.model.messages.Inbox;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,6 +37,10 @@ public class User {
     private String town;
     private String country;
     private String console;
+
+    @OneToOne
+    @JoinColumn(name = "inbox_id")
+    private Inbox inbox;
 
 
     private Date registrationDate;
