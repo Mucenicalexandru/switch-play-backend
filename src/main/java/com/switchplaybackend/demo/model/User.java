@@ -1,5 +1,6 @@
 package com.switchplaybackend.demo.model;
 
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class User {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     private String firstName;
     private String lastName;
@@ -37,6 +39,9 @@ public class User {
     private String country;
     private String console;
 
+    @OneToMany(mappedBy = "userWhoIsReceiving", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Review> reviews = new ArrayList<>();
 
     private Date registrationDate;
 
