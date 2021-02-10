@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "message", catalog = "switch_play")
+@Table(name = "messages", catalog = "switch_play")
 public class Message {
     public Message() {
 
@@ -20,10 +20,10 @@ public class Message {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private UUID id;
+    private UUID message_id;
 
     @ManyToOne
-    @JoinColumn(name = "InboxId",nullable = false)
+    @JoinColumn(name = "inbox_id",nullable = false)
     private Inbox InboxId;
 
     private String message;
