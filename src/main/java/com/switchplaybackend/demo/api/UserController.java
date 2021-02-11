@@ -2,6 +2,8 @@ package com.switchplaybackend.demo.api;
 
 import com.switchplaybackend.demo.model.Offer;
 import com.switchplaybackend.demo.model.User;
+import com.switchplaybackend.demo.model.messages.Inbox;
+import com.switchplaybackend.demo.repository.InboxRepository;
 import com.switchplaybackend.demo.repository.OfferRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
 import com.switchplaybackend.demo.security.JwtTokenServices;
@@ -43,6 +45,10 @@ public class UserController {
     @Autowired
     private OfferRepository offerRepository;
 
+    @Autowired
+    private InboxRepository inboxRepository;
+
+
 
     @GetMapping("/users")
     public List<User> getAllUsers(){ return userRepository.findAll();}
@@ -60,7 +66,7 @@ public class UserController {
 
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addUser (@Valid @RequestBody User user) throws URISyntaxException {
+    public ResponseEntity<?> addUser (@RequestBody User user) throws URISyntaxException {
 
        if(userRepository.existsByEmail(user.getEmail())){
             HttpHeaders responseHeaders = new HttpHeaders();
@@ -69,7 +75,9 @@ public class UserController {
            String password = passwordEncoder.encode(user.getPassword());
            user.setPassword(password);
 
+
            User result = userRepository.save(user);
+
            return ResponseEntity.created(new URI("/add-user" + result.getId())).body(result);
        }
 
