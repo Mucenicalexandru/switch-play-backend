@@ -1,6 +1,8 @@
 package com.switchplaybackend.demo.api;
 
 import com.switchplaybackend.demo.model.User;
+import com.switchplaybackend.demo.model.messages.Inbox;
+import com.switchplaybackend.demo.repository.InboxRepository;
 import com.switchplaybackend.demo.repository.UserRepository;
 import com.switchplaybackend.demo.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,13 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private InboxRepository inboxRepository;
 
+
+
+
+    private final AuthenticationManager authenticationManager;
     private final JwtTokenServices jwtTokenServices;
 
     public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices, UserRepository users) {
@@ -45,6 +52,11 @@ public class AuthController {
             String email = user.getEmail();
             UUID id = userRepository.findByEmail(email).get().getId();
             String firstName = userRepository.findByEmail(email).get().getFirstName();
+
+            Inbox temp_inbox = userRepository.findByEmail(email).get().getInbox();
+            temp_inbox.setUser(id);
+            inboxRepository.save(temp_inbox);
+
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, user.getPassword()));
             List<String> roles = authentication.getAuthorities()
