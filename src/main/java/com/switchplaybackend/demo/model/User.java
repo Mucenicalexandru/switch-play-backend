@@ -38,9 +38,13 @@ public class User {
     private String country;
     private String console;
 
-    @OneToOne
-    @JoinColumn(name = "inbox_id")
+    @OneToOne( cascade = CascadeType.PERSIST)
     private Inbox inbox;
+
+    public void setInbox(Inbox inbox) {
+        this.inbox = inbox;
+    }
+
 
 
     private Date registrationDate;
