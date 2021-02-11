@@ -1,6 +1,7 @@
 package com.switchplaybackend.demo.model.messages;
 
 import com.switchplaybackend.demo.model.User;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "inbox", catalog = "switch_play")
+@Data
 public class Inbox {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -19,11 +21,41 @@ public class Inbox {
     )
     private UUID InboxId;
 
-    @OneToMany(mappedBy = "InboxId")
-    private List<Message> messageList;
+    @OneToMany( cascade = CascadeType.ALL)
+    private List<Message> receivedMessages;
 
-    @OneToOne
-    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Message> sentMessages;
+
+    public UUID getUser() {
+        return userId;
+    }
+
+    public void setUser(UUID userId) {
+        this.userId = userId;
+    }
+
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private UUID userId;
+
+
+    public List<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void addSentMessages(Message message) {
+        sentMessages.add(message);
+    }
+
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void addReceivedMessages(Message message) {
+        receivedMessages.add(message);
+    }
+
 
 
 }
