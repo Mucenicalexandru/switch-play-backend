@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "messages", catalog = "switch_play")
+@Data
 public class Message {
     public Message() {
 
@@ -22,17 +23,14 @@ public class Message {
     )
     private UUID message_id;
 
-    @ManyToOne
-    @JoinColumn(name = "inbox_id",nullable = false)
-    private Inbox InboxId;
 
     private String message;
 
-    @OneToOne
-    private User sender;
 
-    @OneToOne
-    private User receiver;
+    private UUID senderId;
+
+
+    private UUID receiverId;
 
 
 
