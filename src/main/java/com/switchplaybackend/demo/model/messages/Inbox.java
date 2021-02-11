@@ -28,18 +28,13 @@ public class Inbox {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Message> sentMessages;
 
-    public UUID getUser() {
-        return userId;
-    }
-
-    public void setUser(UUID userId) {
-        this.userId = userId;
-    }
-
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private UUID userId;
 
 
+    public UUID getUser() { return userId; }
+
+    public void setUser(UUID userId) { this.userId = userId;}
     public List<Message> getSentMessages() {
         return sentMessages;
     }
