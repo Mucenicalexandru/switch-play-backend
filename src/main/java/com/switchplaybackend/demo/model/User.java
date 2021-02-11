@@ -46,6 +46,7 @@ public class User {
     @OneToOne( cascade = CascadeType.PERSIST)
     private Inbox inbox;
 
+    
     public void setInbox(Inbox inbox) {
         this.inbox = inbox;
     }
