@@ -10,5 +10,4 @@ import java.util.UUID;
 
 public interface InboxRepository  extends JpaRepository<Inbox, UUID> {
     Inbox getByUserId(UUID user_id);
-
 }

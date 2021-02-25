@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,8 +38,8 @@ public class MessageControler {
         message.setReceiverUserName(userRepository.getOne(message.getReceiverId()).getFirstName());
 
         receiver_inbox.addReceivedMessages(message);
-
         sender_inbox.addSentMessages(message);
+
         java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         message.setDate(currentDate);
 
@@ -49,7 +51,32 @@ public class MessageControler {
     }
     @GetMapping(path = "/get-inbox/{userID}")
     public Inbox  getInboxByUserId(@PathVariable UUID userID){
-        System.out.println(inboxRepository.getByUserId(userID));
         return inboxRepository.getByUserId(userID);
+    }
+
+    @PostMapping(path = "/delete-message/{messageId}/{userId}")
+    public void deleteMessage(@PathVariable UUID messageId ,@PathVariable UUID userId){
+        Inbox inbox=getInboxByUserId(userId);
+        List<Message> temp_SentMessages= new ArrayList<>();
+        List<Message> temp_receivedMessages= new ArrayList<>();
+
+        for (Message message: inbox.getSentMessages()) {
+            System.out.println(message.getMessage_id());
+            System.out.println(messageId);
+            if(!message.getMessage_id().equals(messageId)){
+                temp_SentMessages.add(message);
+            }
+        }
+        for (Message message: inbox.getReceivedMessages()){
+            if(!message.getMessage_id().equals(messageId)){
+                temp_receivedMessages.add(message);
+            }
+        }
+        System.out.println(temp_SentMessages);
+        System.out.println(temp_receivedMessages);
+        inbox.setSentMessages(temp_SentMessages);
+        inbox.setReceivedMessages(temp_receivedMessages);
+        inboxRepository.save(inbox);
+
     }
 }
