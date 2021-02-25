@@ -61,8 +61,7 @@ public class MessageControler {
         List<Message> temp_receivedMessages= new ArrayList<>();
 
         for (Message message: inbox.getSentMessages()) {
-            System.out.println(message.getMessage_id());
-            System.out.println(messageId);
+
             if(!message.getMessage_id().equals(messageId)){
                 temp_SentMessages.add(message);
             }
@@ -72,11 +71,8 @@ public class MessageControler {
                 temp_receivedMessages.add(message);
             }
         }
-        System.out.println(temp_SentMessages);
-        System.out.println(temp_receivedMessages);
         inbox.setSentMessages(temp_SentMessages);
         inbox.setReceivedMessages(temp_receivedMessages);
         inboxRepository.save(inbox);
-
     }
 }
