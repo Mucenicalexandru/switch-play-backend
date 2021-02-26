@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 public class Game {
 
-    protected Game() {
+    public Game() {
 
     }
 

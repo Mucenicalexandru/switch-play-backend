@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 public class Category {
 
-    protected Category() {
+    public Category() {
 
     }
     @Id

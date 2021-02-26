@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "reviews", catalog = "switch_play")
 public class Review {
 
-    protected Review(){
+    public Review(){
 
     }
 

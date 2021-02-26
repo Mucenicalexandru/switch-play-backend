@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "users", catalog = "switch_play")
 public class User {
 
-    protected User(){
+    public User(){
 
     }
 

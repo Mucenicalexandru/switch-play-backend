@@ -31,10 +31,7 @@ public class DealController {
 
     @GetMapping("/get-deal-by-user-and-game/{userID}/{gameID}")
     public List<Deal> getDealByUserAndGame(@PathVariable UUID userID, @PathVariable UUID gameID){
-        System.out.println(userID);
-        System.out.println(gameID);
         List<Deal> deal = dealRepository.findAllByActiveUserIDAndGameListedId(userID, gameID);
-        System.out.println(deal);
         return deal;
     }
 
